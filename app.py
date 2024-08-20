@@ -15,7 +15,7 @@ from statsmodels.tsa.seasonal import seasonal_decompose
 
 
 # Load in dataset
-data_dir = r'data/bidcorp.csv'
+data_dir = r'data/test.csv'
 
 df = sbg_dloader(data_dir, 2020)
 df1 = df.copy()
