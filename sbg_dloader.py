@@ -12,8 +12,11 @@ def sbg_dloader(data_dir=str, start_date=int) -> pd.DataFrame:
     # Date convert
     df['Date'] = pd.to_datetime(df['Date'])
 
-    # Select date range
-    df = df[(df['Date'].dt.year >= start_date)].copy()
+    try:
+        # Select date range
+        df = df[(df['Date'].dt.year >= start_date)].copy()
+    except:
+        print("Warn: Years are too short!")
 
     df.index = range(len(df))
 
