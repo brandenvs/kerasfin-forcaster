@@ -7,17 +7,16 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 import random
 import numpy as np
-# set seed, so we can get the same results after rerunning several times
+
+# set seed
 np.random.seed(314)
 tf.random.set_seed(314)
 random.seed(314)
 BASE_DIR = Path(__file__).resolve().parent
 
 def model_loader(model_name: str):
-    # model_name = next(iter(model_name))
-
     model_dir = f'{BASE_DIR}/models/' +  model_name + '.keras'
-    # model_dir = os.path.join(BASE_DIR, 'models', model_name + '.keras')
+
     model = tf.keras.models.load_model(model_dir)
     return model
 
@@ -38,7 +37,7 @@ def model_train(train_df=pd.DataFrame, valid_df=pd.DataFrame, target=str, epochs
         tf.keras.layers.Dense(1)
     ])
 
-    nn_model.compile(optimizer='adam', loss=tf.keras.losses.MeanAbsoluteError())
+    nn_model.compile(optimizer='adam', loss=tf.keras.losses.MeanAbsoluteError(), metrics=['accuracy'])
 
     # Train the model
     nn_model.fit(
@@ -88,11 +87,9 @@ def model_train_other(train_df=pd.DataFrame, valid_df=pd.DataFrame, target=str, 
 def model_predict(test_set=pd.DataFrame, test_df=pd.DataFrame, target=str, trained_model=any, model_name=str):
     y_test  = test_df[target].copy()
     X_test  = test_df.drop([target], axis=1)
-
-    y_pred = trained_model.predict(X_test)
-
-
-    # y_pred_plot = y_pred.reshape(-1)
+    scaler = MinMaxScaler()
+    X_train_scaled = scaler.fit_transform(X_test)
+    y_pred = trained_model.predict(X_train_scaled)
 
     plt.figure(figsize=(12, 6))
     plt.plot(test_set.Date, y_test, label='Actual')

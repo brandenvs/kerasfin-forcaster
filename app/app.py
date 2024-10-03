@@ -19,10 +19,11 @@ import random
 BASE_DIR = Path(__file__).resolve().parent
 
 
-# set seed, so we can get the same results after rerunning several times
+# Set seed, so we can get the same results after rerunning several times
 np.random.seed(314)
 tf.random.set_seed(314)
 random.seed(314)
+
 BASE_DIR = Path(__file__).resolve().parent
 
 def get_datasets() -> str:
@@ -69,7 +70,7 @@ def feed_model(df: pd.DataFrame, model_name) -> pd.DataFrame:
 
 def forecast_df(model_name: str, df):
     target = 'Close'
-    model_name = next(iter(model_name)) # Fucking sets. Spent a good 2 hours only to realize it was a set not a string 🥲
+    model_name = next(iter(model_name)) # Spent a good 2 hours only to realize it was a set not a string 🥲
     loaded_model = model_loader(model_name)
 
     start_date = datetime(2024, 8, 29)

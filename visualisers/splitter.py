@@ -1,5 +1,0 @@
-fig = go.Figure()
-fig.add_trace(go.Scatter(x=train_df.Date, y=train_df.Close, name='Training'))
-fig.add_trace(go.Scatter(x=valid_df.Date, y=valid_df.Close, name='Validation'))
-fig.add_trace(go.Scatter(x=test_df.Date,  y=test_df.Close,  name='Test'))
-fig.show()

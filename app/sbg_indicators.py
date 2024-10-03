@@ -13,12 +13,15 @@ def relative_strength_idx(df, n=14):
     close = df['Close']
     delta = close.diff()
     delta = delta[1:]
+
     pricesUp = delta.copy()
     pricesDown = delta.copy()
     pricesUp[pricesUp < 0] = 0
     pricesDown[pricesDown > 0] = 0
+
     rollUp = pricesUp.rolling(n).mean()
     rollDown = pricesDown.abs().rolling(n).mean()
+
     rs = rollUp / rollDown
     rsi = 100.0 - (100.0 / (1.0 + rs))
 
